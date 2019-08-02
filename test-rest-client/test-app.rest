@@ -1,0 +1,2 @@
+GET http://localhost:8080/resultsEntities http/1.1
+Authorization: Bearer 9432d151-273a-41f6-877d-8d03b8540654

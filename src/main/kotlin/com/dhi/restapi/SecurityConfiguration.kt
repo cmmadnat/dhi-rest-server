@@ -20,6 +20,10 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.core.AuthorizationGrantType
 import org.springframework.stereotype.Component
 import javax.servlet.http.HttpServletResponse
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
+import org.springframework.security.web.util.matcher.RequestMatcher
 
 
 @Configuration
@@ -32,12 +36,6 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     override fun userDetailsService(): UserDetailsService {
         return myUserDetailService
-    }
-
-    public override fun configure(http: HttpSecurity) {
-        http.csrf().disable().exceptionHandling()
-                .authenticationEntryPoint { _, response, _ -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED) }
-                .and().authorizeRequests().antMatchers("/**").authenticated().and().httpBasic()
     }
 
 
@@ -77,6 +75,18 @@ class MyUserDetailService : UserDetailsService {
 
         } else throw
         UsernameNotFoundException("Username not found")
+    }
+
+}
+
+@Configuration
+@EnableResourceServer
+class ResourceServerConfiguration : ResourceServerConfigurerAdapter() {
+
+
+    @Throws(Exception::class)
+    override fun configure(http: HttpSecurity) {
+        http.authorizeRequests().antMatchers("/**").authenticated().anyRequest().permitAll()
     }
 
 }
