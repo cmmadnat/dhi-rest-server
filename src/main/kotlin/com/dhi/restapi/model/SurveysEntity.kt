@@ -1,0 +1,27 @@
+package com.dhi.restapi.model
+
+import javax.persistence.*
+import java.sql.Timestamp
+import java.util.Objects
+
+@Entity
+@Table(name = "surveys", schema = "dhi_db", catalog = "")
+class SurveysEntity {
+    @get:Id
+    @get:Column(name = "id")
+    var id: Int = 0
+    @get:Basic
+    @get:Column(name = "name")
+    var name: String? = null
+    @get:Basic
+    @get:Column(name = "json")
+    var json: String? = null
+    @get:Basic
+    @get:Column(name = "createdate")
+    var createdate: Timestamp? = null
+    @get:Basic
+    @get:Column(name = "Cateid")
+    var cateid: Int? = null
+
+
+}
