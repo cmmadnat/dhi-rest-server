@@ -7,7 +7,7 @@ import java.util.Arrays
 import java.util.Objects
 
 @Entity
-@Table(name = "staff", schema = "dhi_db", catalog = "")
+@Table(name = "staff")
 class StaffEntity {
     @get:Id
     @get:Column(name = "staffID")
@@ -34,7 +34,7 @@ class StaffEntity {
     @get:Column(name = "role")
     var role: String? = null
     @get:Basic
-    @get:Column(name = "staffImage")
+    @get:Column(name = "staffImage", columnDefinition = "blob")
     var staffImage: ByteArray? = null
     @get:Basic
     @get:Column(name = "createDate")

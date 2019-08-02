@@ -4,7 +4,7 @@ import javax.persistence.*
 import java.util.Objects
 
 @Entity
-@Table(name = "category", schema = "dhi_db", catalog = "")
+@Table(name = "category")
 class CategoryEntity {
     @get:Id
     @get:Column(name = "Cateid")

@@ -2,53 +2,53 @@ package com.dhi.restapi.model
 
 import javax.persistence.*
 import java.sql.Timestamp
-import java.util.Objects
+import java.util.*
 
 @Entity
-@Table(name = "answer_record", schema = "dhi_db", catalog = "")
+@Table(name = "answer_record")
 class AnswerRecordEntity {
-    @get:Id
-    @get:Column(name = "ansID")
+    @Id
+    @Column(name = "ansID")
     var ansId: Long = 0
-    @get:Basic
-    @get:Column(name = "resultID")
+    @Basic
+    @Column(name = "resultID")
     var resultId: Int? = null
-    @get:Basic
-    @get:Column(name = "question")
+    @Basic
+    @Column(name = "question")
     var question: String? = null
-    @get:Basic
-    @get:Column(name = "questionCode")
+    @Basic
+    @Column(name = "questionCode")
     var questionCode: String? = null
-    @get:Basic
-    @get:Column(name = "questionCodeDescription")
+    @Basic
+    @Column(name = "questionCodeDescription")
     var questionCodeDescription: String? = null
-    @get:Basic
-    @get:Column(name = "questionCodeDesignator")
+    @Basic
+    @Column(name = "questionCodeDesignator")
     var questionCodeDesignator: String? = null
-    @get:Basic
-    @get:Column(name = "questionCodeVersion")
+    @Basic
+    @Column(name = "questionCodeVersion")
     var questionCodeVersion: String? = null
-    @get:Basic
-    @get:Column(name = "answer")
+    @Basic
+    @Column(name = "answer")
     var answer: String? = null
-    @get:Basic
-    @get:Column(name = "answerCode")
+    @Basic
+    @Column(name = "answerCode")
     var answerCode: String? = null
-    @get:Basic
-    @get:Column(name = "answerCodeDescription")
+    @Basic
+    @Column(name = "answerCodeDescription")
     var answerCodeDescription: String? = null
-    @get:Basic
-    @get:Column(name = "answerCodeDesignator")
+    @Basic
+    @Column(name = "answerCodeDesignator")
     var answerCodeDesignator: String? = null
-    @get:Basic
-    @get:Column(name = "answerCodeVersion")
+    @Basic
+    @Column(name = "answerCodeVersion")
     var answerCodeVersion: String? = null
-    @get:Basic
-    @get:Column(name = "surveyeeName")
+    @Basic
+    @Column(name = "surveyeeName")
     var surveyeeName: String? = null
-    @get:Basic
-    @get:Column(name = "ansDatetime")
-    var ansDatetime: Timestamp? = null
+    @Basic
+    @Column(name = "ansDatetime")
+    var ansDatetime: Date? = null
 
 
 }

@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    url: jdbc:mysql://localhost:3306/dhi_db
+    username: root

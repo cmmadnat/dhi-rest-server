@@ -5,7 +5,7 @@ import java.sql.Timestamp
 import java.util.Objects
 
 @Entity
-@Table(name = "surveys", schema = "dhi_db", catalog = "")
+@Table(name = "surveys")
 class SurveysEntity {
     @get:Id
     @get:Column(name = "id")
@@ -14,7 +14,7 @@ class SurveysEntity {
     @get:Column(name = "name")
     var name: String? = null
     @get:Basic
-    @get:Column(name = "json")
+    @get:Column(name = "json", columnDefinition = "TEXT")
     var json: String? = null
     @get:Basic
     @get:Column(name = "createdate")
