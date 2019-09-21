@@ -1,2 +1,2 @@
 GET http://localhost:8080 HTTP/1.1
-Authorization: Bearer 9432d151-273a-41f6-877d-8d03b8540654
+Authorization: Bearer 48415bab-0bdc-44f3-8310-bce64254c3d3
