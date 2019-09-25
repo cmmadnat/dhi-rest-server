@@ -6,6 +6,6 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
-    url: jdbc:mysql://localhost:3306/dhi_db
-    username: root
-
+    url: ${DHI_CONNECTION_STRING}
+    username: ${DHI_CONNECTION_USERNAME}
+    password: ${DHI_CONNECTION_PASSWORD}
