@@ -1,4 +1,4 @@
-package com.dhi.restapi
+package com.dhi.restapi.config
 
 import com.dhi.restapi.repository.StaffRepository
 import org.springframework.beans.factory.FactoryBean
@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Primary
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
@@ -51,7 +52,6 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     override fun userDetailsService(): UserDetailsService {
         return myUserDetailService
     }
-
 
     public override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(myUserDetailService).passwordEncoder(passwordEncoder())
@@ -139,7 +139,14 @@ class ResourceServerConfiguration : ResourceServerConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.authorizeRequests().antMatchers("/**").authenticated().anyRequest().permitAll()
+        http.authorizeRequests()
+                .antMatchers("/patient_photo/**").permitAll()
+                .antMatchers("/**").authenticated()
+
+
     }
+//    override fun configure(web: WebSecurity) {
+//        web.ignoring().antMatchers("/patient_photo/**")
+//    }
 
 }

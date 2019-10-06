@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 
@@ -53,7 +50,18 @@ class PhotoUploadController {
     }
 
     @RequestMapping("view")
-    fun getPhotos(@RequestParam patientId: Long): Set<PatientPhoto> {
+    fun getPhotos(@RequestParam patientId: Long): List<PatientPhoto> {
         return patientPhotoRepository.findByPatientId(patientId, PageRequest.of(0, 100, Sort(Sort.Direction.DESC, "date")))
+    }
+
+    @RequestMapping("delete/{id}")
+    fun deletePhoto(@PathVariable id: Long): String {
+        val get = patientPhotoRepository.findById(id).get()
+        val path = get.path
+        if (path != null) {
+            File(path).delete()
+        }
+        patientPhotoRepository.delete(get)
+        return "success"
     }
 }
