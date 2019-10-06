@@ -1,2 +1,4 @@
-GET http://localhost:8080 HTTP/1.1
-Authorization: Bearer 48415bab-0bdc-44f3-8310-bce64254c3d3
+GET http://localhost:8080/photo/ HTTP/1.1
+Authorization: Bearer de125395-4348-44eb-9396-40a5bffbc819
+
+###

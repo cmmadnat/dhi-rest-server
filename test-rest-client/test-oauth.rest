@@ -3,7 +3,7 @@ POST http://localhost:8080/oauth/token HTTP/1.1
 Host: authorization-server.com
 Content-type: application/x-www-form-urlencoded
 
-grant_type=client_credentials&username=Banphaeo.staff&password=BanPhaeo&client_id=my-client&client_secret=secret
+grant_type=password&username=Banphaeo.staff&password=BanPhaeo&client_id=my-client&client_secret=secret
 
 ###
 

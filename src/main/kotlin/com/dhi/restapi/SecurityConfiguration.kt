@@ -2,8 +2,11 @@ package com.dhi.restapi
 
 import com.dhi.restapi.repository.StaffRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -23,6 +26,10 @@ import javax.servlet.http.HttpServletResponse
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices
+import org.springframework.security.oauth2.provider.token.TokenStore
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
 import org.springframework.security.web.util.matcher.RequestMatcher
 
 
@@ -30,6 +37,11 @@ import org.springframework.security.web.util.matcher.RequestMatcher
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     @Autowired
     lateinit var myUserDetailService: UserDetailsService
+
+    @Bean
+    override fun authenticationManager(): AuthenticationManager {
+        return super.authenticationManager()
+    }
 
     @Bean
     fun passwordEncoder() = BCryptPasswordEncoder(12)
@@ -47,18 +59,47 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     class AuthorizationServer : AuthorizationServerConfigurerAdapter() {
         @Autowired
         lateinit var passwordEncoder: BCryptPasswordEncoder
+        @Autowired
+        lateinit var authenticationManager: AuthenticationManager
 
         override fun configure(clients: ClientDetailsServiceConfigurer) {
             clients.inMemory()
                     .withClient("my-client").secret(passwordEncoder.encode(("secret")))
-                    .autoApprove(true).authorizedGrantTypes(AuthorizationGrantType.CLIENT_CREDENTIALS.value).scopes("user_info")
+                    .autoApprove(true)
+                    .scopes("user_info")
 
         }
 
+        override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
+            endpoints.authenticationManager(authenticationManager)
+                    .tokenStore(tokenStore()).accessTokenConverter(accessTokenConverter())
+        }
 
         override fun configure(security: AuthorizationServerSecurityConfigurer) {
             security.tokenKeyAccess("permitAll()")
                     .checkTokenAccess("isAuthenticated()").allowFormAuthenticationForClients()
+        }
+
+        @Bean
+        fun tokenStore(): TokenStore {
+            return JwtTokenStore(accessTokenConverter());
+        }
+
+        @Bean
+        fun accessTokenConverter(): JwtAccessTokenConverter {
+            val converter = JwtAccessTokenConverter()
+            converter.setSigningKey("123")
+            return converter
+        }
+
+        @Bean
+        @Primary
+        fun tokenServices(): DefaultTokenServices {
+            val defaultTokenServices = DefaultTokenServices()
+            defaultTokenServices.setTokenStore(tokenStore())
+            defaultTokenServices.setSupportRefreshToken(true)
+            return defaultTokenServices
+
         }
     }
 }
@@ -82,7 +123,6 @@ class MyUserDetailService : UserDetailsService {
 @Configuration
 @EnableResourceServer
 class ResourceServerConfiguration : ResourceServerConfigurerAdapter() {
-
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {

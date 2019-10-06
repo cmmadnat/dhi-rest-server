@@ -17,9 +17,14 @@ class PhotoUploadController {
     @Autowired
     private lateinit var environment: Environment
 
+    @RequestMapping("/")
+    fun hello(): String {
+        return "hello"
+    }
+
     @RequestMapping("upload", method = [RequestMethod.POST])
-    fun uploadPhoto(@RequestParam lat: Float, @RequestParam lng: Float,
-                    @RequestParam description: String, @RequestParam image: MultipartFile): String {
+    fun uploadPhoto(@RequestParam lat: String, @RequestParam lng: String,
+                    @RequestParam description: String, @RequestParam image: MultipartFile, @RequestParam patientId: String): String {
         var defaultImageFolder = environment.getProperty("DHI_SYSTEM_IMAGE_PATH")
         if (defaultImageFolder == null) defaultImageFolder = System.getProperty("user.home")
         val parentFolder = File(defaultImageFolder, "dhi_patient_photo")
