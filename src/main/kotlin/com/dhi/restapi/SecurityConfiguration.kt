@@ -1,6 +1,7 @@
 package com.dhi.restapi
 
 import com.dhi.restapi.repository.StaffRepository
+import org.springframework.beans.factory.FactoryBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletResponse
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices
 import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
@@ -82,7 +84,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
         @Bean
         fun tokenStore(): TokenStore {
-            return JwtTokenStore(accessTokenConverter());
+            return JwtTokenStore(accessTokenConverter())
         }
 
         @Bean
@@ -123,6 +125,13 @@ class MyUserDetailService : UserDetailsService {
 @Configuration
 @EnableResourceServer
 class ResourceServerConfiguration : ResourceServerConfigurerAdapter() {
+
+    @Autowired
+    lateinit var tokenServices: DefaultTokenServices
+
+    override fun configure(resources: ResourceServerSecurityConfigurer) {
+        resources.tokenServices(tokenServices)
+    }
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {

@@ -1,4 +1,4 @@
 GET http://localhost:8080/photo/ HTTP/1.1
-Authorization: Bearer de125395-4348-44eb-9396-40a5bffbc819
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzAzOTM0ODgsInVzZXJfbmFtZSI6IkJhbnBoYWVvLnN0YWZmIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6IjIwYWFkOTM1LThkYjMtNDlhZS1iNmJkLTBkNTY3NmVkZTJmYyIsImNsaWVudF9pZCI6Im15LWNsaWVudCIsInNjb3BlIjpbInVzZXJfaW5mbyJdfQ.z-jrpZ3vQccH35OiLusBTDxJ_D41rJRq_PhPzT5S-rM
 
 ###
