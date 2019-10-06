@@ -11,9 +11,10 @@ class PatientPhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
-    var lat: Float? = null;
-    var lng: Float? = null;
+    var lat: Float? = null
+    var lng: Float? = null
     var patientId: Long? = null
     var path: String? = null
     var date = Date()
+    var description: String = ""
 }

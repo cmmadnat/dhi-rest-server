@@ -44,6 +44,7 @@ class PhotoUploadController {
         patientPhoto.lat = lat.toFloatOrNull()
         patientPhoto.lng = lng.toFloatOrNull()
         patientPhoto.path = newFile.absolutePath
+        patientPhoto.description = description
         patientPhotoRepository.save(patientPhoto)
 
         return "success"
