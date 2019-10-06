@@ -113,11 +113,15 @@ class MyUserDetailService : UserDetailsService {
 
     override fun loadUserByUsername(p0: String?): UserDetails {
         if (p0 != null) {
-            val user = staffRepository.findByUname(p0).get()
-            return User(user.uname, user.pwd, listOf(SimpleGrantedAuthority("ROLE_USER")))
 
-        } else throw
-        UsernameNotFoundException("Username not found")
+            val user = staffRepository.findByUname(p0)
+            if (user.isPresent) {
+                val get = user.get()
+                return User(get.uname, get.pwd, listOf(SimpleGrantedAuthority("ROLE_USER")))
+            }
+
+        }
+        throw UsernameNotFoundException("Username not found")
     }
 
 }
