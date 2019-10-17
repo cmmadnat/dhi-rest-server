@@ -13,15 +13,16 @@ class LocationController {
 
     @GetMapping("{patientId}")
     fun patientLocation(@PathVariable patientId: Long): PatientLocationEntity? {
-        return patientLocationRepository.findByPatientId(patientId)
+        return patientLocationRepository.findByPatientId(patientId).firstOrNull()
     }
 
     @PostMapping("{patientId}")
-    fun patientLocationUpdate(@PathVariable patientId: Long, @RequestParam lat: Double, @RequestParam lng: Double): String {
+    fun patientLocationUpdate(@PathVariable patientId: Long, @RequestParam lat: Float, @RequestParam lng: Float): String {
         val findByPatientId = patientLocationRepository.findByPatientId(patientId)
-        if (findByPatientId != null) patientLocationRepository.delete(findByPatientId)
+        findByPatientId.forEach { patientLocationRepository.delete(it) }
         val patientLocationEntity = PatientLocationEntity()
         patientLocationEntity.lat = lat; patientLocationEntity.lng = lng; patientLocationEntity.patientId = patientId
+        patientLocationRepository.save(patientLocationEntity)
         return "success"
     }
 }

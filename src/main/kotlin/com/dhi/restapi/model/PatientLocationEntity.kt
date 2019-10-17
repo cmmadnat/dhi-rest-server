@@ -5,18 +5,19 @@ import javax.persistence.*
 @Entity
 @Table(name = "patient_location", schema = "dhi_db", catalog = "")
 open class PatientLocationEntity {
-    @get:Id
-    @get:Column(name = "id", nullable = false)
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
     @get:Basic
     @get:Column(name = "date", nullable = true)
     var date: java.sql.Timestamp? = null
     @get:Basic
     @get:Column(name = "lat", nullable = true)
-    var lat: Double? = null
+    var lat: Float? = null
     @get:Basic
     @get:Column(name = "lng", nullable = true)
-    var lng: Double? = null
+    var lng: Float? = null
     @get:Basic
     @get:Column(name = "patientId", nullable = true)
     var patientId: Long? = null
